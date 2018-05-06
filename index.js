@@ -10,7 +10,9 @@ app.listen(process.env.PORT, function() {
 });
 
 app.get('/', function(req, res) {
-    res.send("Hello, World!");
+	getAuthToken(function (token) {		
+		res.send(token);
+	})
 });
 
 app.get('/destination', function(req, res) {
@@ -27,3 +29,33 @@ app.post('/destination', function(req, res) {
     console.log(req.body);
     res.sendStatus(200);
 })
+
+function getAuthToken(callback) {
+	if (authToken && Date.now() < new Date(authTokenExpires).getTime()) {
+		return callback(authToken);
+	} else {
+		//get new token
+
+		var options = {
+			url: 'https://api.redoxengine.com/auth/authenticate',
+			method: 'POST',
+			body: {
+				apiKey: SOURCE_API_KEY,
+				secret: SOURCE_SECRET
+			}, 
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			json: true
+		};
+
+		request.post(options, function (err, response, body) {
+			console.log(body);
+
+			authToken = body.accessToken;
+			authTokenExpires = body.expires;
+
+			callback(authToken);
+		});
+	}
+}
