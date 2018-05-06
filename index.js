@@ -29,7 +29,7 @@ app.get('/store', function(req, res) {
 
 app.get('/retrieve', function(req, res) {
 	// retrieve
-	var val = db.has('stores').find({ title: 'hello!' }).value();
+	var val = db.get('stores').find({ title: 'hello!' }).value();
 	res.send(val);
 
 	// delete after retrieving
