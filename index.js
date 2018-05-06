@@ -2,6 +2,7 @@ var express = require('express')
 var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
+var _token="";
 
 app.use(bodyParser.json());
 
@@ -10,9 +11,7 @@ app.listen(process.env.PORT, function() {
 });
 
 app.get('/', function(req, res) {
-	getAuthToken(function (token) {		
-		res.send(token);
-	})
+	res.send(_token);
 });
 
 app.get('/destination', function(req, res) {
@@ -55,7 +54,7 @@ function getAuthToken(callback) {
 			authToken = body.accessToken;
 			authTokenExpires = body.expires;
 
-			callback(authToken);
+			_token=authToken;
 		});
 	}
 }
