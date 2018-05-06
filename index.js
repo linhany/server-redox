@@ -30,7 +30,7 @@ app.get('/store', function(req, res) {
 app.get('/retrieve', function(req, res) {
 	// retrieve
 	var val = db.get('stores').find({ title: 'hello!' }).value();
-	res.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+	res.set('Access-Control-Allow-Origin', '*')
 	res.send(val);
 
 	// delete after retrieving
