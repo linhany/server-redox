@@ -3,8 +3,10 @@ var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
 
-var lowdb = require('lowdb');
-var db = lowdb('db.json');
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
 db.defaults({ stores: [] })
 	.write();
