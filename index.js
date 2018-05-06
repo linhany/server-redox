@@ -11,7 +11,9 @@ app.listen(process.env.PORT, function() {
 });
 
 app.get('/', function(req, res) {
-	res.send(_token);
+	getAuthToken(function() {
+		res.send(_token);
+	})
 });
 
 app.get('/destination', function(req, res) {
@@ -54,7 +56,7 @@ function getAuthToken(callback) {
 			authToken = body.accessToken;
 			authTokenExpires = body.expires;
 
-			_token=authToken;
 		});
+		this._token=authToken;
 	}
 }
