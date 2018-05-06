@@ -27,7 +27,7 @@ app.get('/store', function(req, res) {
 	res.sendStatus(200);
 });
 
-app.post('/retrieve', function(req, res) {
+app.get('/retrieve', function(req, res) {
 	// retrieve
 	var val = db.has('stores').value();
 	res.send(val);
